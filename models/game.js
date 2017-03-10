@@ -1,3 +1,6 @@
+// Free DM, a Dungeon Master management Utility
+// Copyright (C) 2017  Onyx Zero Software
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

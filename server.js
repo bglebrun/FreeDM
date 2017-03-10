@@ -1,3 +1,6 @@
+// Free DM, a Dungeon Master management Utility
+// Copyright (C) 2017  Onyx Zero Software
+
 const express = require('express');
 const morgan = require('morgan');
 const httpstatus = require('http-status-codes');
