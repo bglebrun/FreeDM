@@ -1,7 +1,7 @@
 {
   "name": "FreeDM",
   "private": false,
-  "license": "MIT",
+  "license": "GPL_V3",
   "dependencies": {
     "body-parser": "1.15.2",
     "eslint-config-xo": "^0.15.4",
