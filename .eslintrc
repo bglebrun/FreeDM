@@ -1,0 +1,4 @@
+extends: google
+rules:
+  no-negated-condition: off
+  max-params: off

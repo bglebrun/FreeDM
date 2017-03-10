@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DM Home</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/modern-business.css">
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+</head>
+
+
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+td, tr {
+  padding-left:1px;
+}
+input {
+  margin:3px;
+}
+.right {
+  float: right;
+  padding-right: 10px;
+}
+.left {
+  float: left;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- Page Heading/Breadcrumbs -->
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="font-family:Raleway,sans-serif;">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a href="/about">About</a>
+                </li>
+                <li>
+                    <a href="/services">Services</a>
+                </li>
+                <li>
+                    <a href="/contact">Contact</a>
+                </li>
+                <li class="active">
+                    <a href="/freedm">Free DM</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<body>
+  <div class="container" ng-app = "FreeDM" ng-controller="DMController" style="max-width:1400px">
+    <!-- Page Heading/Breadcrumbs -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-header"><h1>{{gamename}} code: {{gamecode}}</h1></div>
+          <ol class="breadcrumb">
+            <li><a href="/">Join</a></li>
+            <li class="active">Home</li>
+          </ol>
+      </div>
+    </div>
+    <!-- /.row -->
+    <div class="container" style="max-width:1400px">
+      <div class="well" style="max-width:500px" ng-repeat="player in allplayers">
+        <div class="row" style="padding:10px">
+          <div class = "col-lg-7">
+            <div class="row">
+              <h3>Name : {{player.name}}</h3>
+            </div>
+            <div class="row">
+              <h3>Max Health : {{player.maxHealth}}</h3>
+            </div>
+            <div class="row">
+              <h3>Current Health {{player.currentHealth}}</h3>
+            </div>
+            <div class="row">
+              <h3>AC: {{player.ac}}</h3>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="row">
+              <button style="width:200px;" class="btn btn-lg btn-default" ng-click="damage($index,player.dmg)">Damage</button>
+              <div class="right"><input style="max-width:50px" type="Number" ng-model="player.dmg"></input></div>
+            </div>
+            <div class="row">
+              <button style="width:200px;" class="btn btn-lg btn-default" ng-click="heal($index,player.heal)">Heal</button>
+              <div class="right"><input style="max-width:50px" type="Number" ng-model="player.heal"></input></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Onyx Zero 2016</p>
+                <p>Helinski font by Ludwig Übele / LudwigType</p>
+                <a href="/privacypolicy"><p>Privacy Policy</p></a>
+            </div>
+        </div>
+    </footer>
+  </div>
+</body>
+</html>
