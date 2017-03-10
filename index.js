@@ -1,6 +1,6 @@
 // Free DM, a Dungeon Master management Utility
 // Copyright (C) 2017  Onyx Zero Software
-var app = require('./lib/server');
+var app = require('./server');
 // Free DM is a simple open source DM tool for managing a campaign
 // It provides a simple to use web interface with which to apply damage,
 // and manage player's health, stats, etc.
