@@ -45,15 +45,11 @@ app.route('/all/games')
   Games.find({}, function(err, games) {
     if (err) {
       console.error(err);
-      res.status(500).send(err);
+      res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
     } else {
       res.send(games);
     }
   });
-  // display list of games
-  // manager.getAllGames(function(games) {
-  //   res.send(games);
-  // });
 });
 
 app.route('/all/players/:game')
@@ -61,15 +57,11 @@ app.route('/all/players/:game')
   Players.find({game: req.params.game}, function(err, players) {
     if (err) {
       console.error(err);
-      res.status(500).send(err);
+      res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
     } else {
       res.send(players);
     }
   });
-  // display list of games
-  // manager.getAllGames(function(games) {
-  //   res.send(games);
-  // });
 });
 
 app.route('/create/game')
@@ -77,15 +69,11 @@ app.route('/create/game')
   Games.create({name: req.body.name, code: req.body.code}, function(err, game) {
     if (err) {
       console.error(err);
-      res.status(500).send(err);
+      res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
     } else {
       res.send(game);
     }
   });
-  // display list of games
-  // manager.getAllGames(function(games) {
-  //   res.send(games);
-  // });
 });
 
 app.route('/join/:gamecode')
@@ -97,14 +85,14 @@ app.route('/join/:gamecode')
   Games.findOne({code: gamecode}, function(err, game) {
     if (err) {
       console.error(err);
-      res.status(500).send(err);
+      res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
     } else if (game) {
       var gamename = game.name;
       Players
       .findOne({game: gamename, name: playername}, function(err, player) {
         if (err) {
           console.error(err);
-          res.status(500).send(err);
+          res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
         } else if (player) {
           // player exists, send info back
           res.send(player);
@@ -116,46 +104,46 @@ app.route('/join/:gamecode')
           }, function(err, player) {
             if (err) {
               console.error(err);
-              res.status(500).send(err);
+              res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
             } else {
               res.send(player);
             }
           });
         } else {
           console.log("Player DNE...");
-          res.status(400).send("Player Does Not Exist...");
+          res.status(httpstatus.BAD_REQUEST).send("Player Does Not Exist...");
         }
       });
     } else {
-      res.status(404).send();
+      res.status(httpstatus.NOT_FOUND).send();
     }
   });
 });
 
 app.route('/edit/player/:gamecode')
 .put(function(req, res) {
-  var update = {
-    $set: {
-      maxHealth: Number(req.body.player.maxHealth),
-      ac: Number(req.body.player.ac)
-    }
-  };
+  var update = {};
+
+  if (req.body.player.ac > 0) {
+    update.ac = req.body.player.ac;
+  }
+  if (Number(req.body.player.maxHealth) > 0) {
+    update.maxHealth = Number(req.body.player.maxHealth);
+  }
 
   Games.findOne({code: req.params.gamecode}, function(err, game) {
     if (err) {
       console.error(err);
-      res.status(500).send(err);
+      res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
     } else if (game) {
-      console.log(game);
       Players.findOneAndUpdate({game: game.name, name: req.query.name},
-        update,
+        {$set: update},
         {new: true},
       function(err, player) {
         if (err) {
           console.error(err);
-          res.status(500).send(err);
+          res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
         } else {
-          console.log(player);
           res.send(player);
         }
       });
@@ -168,15 +156,76 @@ app.route('/edit/player/:gamecode')
 
 app.route('/player/:gamecode')
 .get(function(req, res) {
-  Players.findOne({game: req.params.gamecode, name: req.query.name},
-    function(err, player) {
-      if (err) {
-        console.error(err);
-        res.status(500).send(err);
-      } else {
-        res.send(player);
-      }
-    });
+  Games.findOne({code: req.params.gamecode}, function(err, game) {
+    if (err) {
+      console.err(err);
+    } else if (game) {
+      Players.findOne({game: req.params.gamecode, name: req.query.name},
+        function(err, player) {
+          if (err) {
+            console.error(err);
+            res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
+          } else {
+            res.send(player);
+          }
+        });
+    } else {
+      console.error("GAME DNE");
+      res.status(httpstatus.BAD_REQUEST).send();
+    }
+  });
+});
+
+app.route('/damage/:gamecode')
+.put(function(req, res) {
+  var dmg = req.body.amount;
+
+  Games.findOne({code: req.params.gamecode}, function(err, game) {
+    if (err) {
+      console.err(err);
+    } else if (game) {
+      Players.findOne({game: game.name, name: req.query.name},
+        function(err, player) {
+          if (err) {
+            console.error(err);
+            res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
+          } else {
+            player.damage(10, dmg, function(player) {
+              res.send(player);
+            });
+          }
+        });
+    } else {
+      console.log("Game DNE");
+      res.status(httpstatus.BAD_REQUEST).send();
+    }
+  });
+});
+
+app.route('/heal/:gamecode')
+.put(function(req, res) {
+  var heal = req.body.amount;
+
+  Games.findOne({code: req.params.gamecode}, function(err, game) {
+    if (err) {
+      console.err(err);
+    } else if (game) {
+      Players.findOne({game: game.name, name: req.query.name},
+        function(err, player) {
+          if (err) {
+            console.error(err);
+            res.status(httpstatus.INTERNAL_SERVER_ERROR).send(err);
+          } else {
+            player.heal(heal, function(player) {
+              res.send(player);
+            });
+          }
+        });
+    } else {
+      console.log("Game DNE");
+      res.status(httpstatus.BAD_REQUEST).send();
+    }
+  });
 });
 
 module.exports = app;
