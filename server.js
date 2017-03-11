@@ -33,7 +33,7 @@ app.use(compression());
 app.use(helmet());
 
 const webOptions = {
-  index: ['enter.html', 'enter.html'],
+  index: ['enter.html'],
   extensions: ['html', 'htm', 'js', 'css'],
   dotfiles: 'deny'
 };

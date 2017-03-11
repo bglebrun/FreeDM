@@ -5,7 +5,7 @@ var app = angular.module('FreeDM.services', []);
 
 app.factory('FreeDMService', function($http) {
   var api = {};
-  const host = '';
+  const host = '/freedm';
 
 // ************* getters ******************************//
   api.getPlayer = function(gamecode, name) {

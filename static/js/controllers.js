@@ -59,7 +59,6 @@ function($scope, $window, FreeDMService) {
     FreeDMService.getAllPlayers($scope.gamename)
     .then(function(response) {
       if (response.status === 200) {
-        console.log("Success!");
         $scope.allplayers = response.data;
         $window.sessionStorage.players = $scope.allplayers;
       }
@@ -71,7 +70,6 @@ function($scope, $window, FreeDMService) {
     .damagePlayer($scope.gamecode, $scope.allplayers[index].name, amount)
     .then(function(response) {
       if (response.status === 200) {
-        console.log("Success!");
         $scope.refreshPlayers();
       }
     });
@@ -82,7 +80,6 @@ function($scope, $window, FreeDMService) {
     .healPlayer($scope.gamecode, $scope.allplayers[index].name, amount)
     .then(function(response) {
       if (response.status === 200) {
-        console.log("Success!");
         $scope.refreshPlayers();
       }
     });
@@ -110,7 +107,7 @@ function($scope, $window, $location, FreeDMService) {
         $window.sessionStorage.gamename = response.data.game;
         $window.sessionStorage.gamecode = $scope.code;
 
-        $window.location = '/player_home';
+        $window.location = '/freedm/player_home';
       } else if (response.status === 400) {
         $window.alert("That Player Does not exist unfortunately");
       }
@@ -121,7 +118,7 @@ function($scope, $window, $location, FreeDMService) {
     $window.sessionStorage.gamecode = $scope.allgames[index].code;
     $window.sessionStorage.gamename = $scope.allgames[index].name;
     console.log($scope.allgames[index]);
-    $window.location = '/dm_home';
+    $window.location = '/freedm/dm_home';
   };
 
   $scope.createGame = function() {
@@ -132,7 +129,7 @@ function($scope, $window, $location, FreeDMService) {
         $window.sessionStorage.gamename = $scope.g_name;
 
         console.log("Creation Success");
-        $window.location = '/dm_home';
+        $window.location = '/freedm/dm_home';
       } else {
         console.error(response);
         $window.alert("Uh Oh...");
