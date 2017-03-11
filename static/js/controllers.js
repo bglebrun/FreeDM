@@ -71,6 +71,9 @@ function($scope, $window, FreeDMService) {
     .then(function(response) {
       if (response.status === 200) {
         $scope.refreshPlayers();
+        console.log("HERE");
+        var audio = new Audio('./audio/sword.wav');
+        audio.play();
       }
     });
   };
@@ -81,6 +84,8 @@ function($scope, $window, FreeDMService) {
     .then(function(response) {
       if (response.status === 200) {
         $scope.refreshPlayers();
+        var audio = new Audio('./audio/cure.ogg');
+        audio.play();
       }
     });
   };
