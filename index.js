@@ -6,7 +6,7 @@ var app = require('./server');
 // and manage player's health, stats, etc.
 // It provides players a simple dice rolling protocol, along with a simple healing interface
 
-app.listen(8000, function(err) {
+app.listen(3000, function(err) {
   if (err) {
     console.log(err);
   } else {

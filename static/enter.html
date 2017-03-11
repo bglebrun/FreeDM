@@ -50,7 +50,8 @@
                         <a href="/contact">Contact</a>
                     </li>
                     <li>
-                        <a href="/smartpass/home">SmartPass >>></a>
+                        <a href="/smartpass/home">SmartPass
+                          <span style="color:green;"> >>></span></a>
                     </li>
                     <li class="active">
                         <a href="/freedm">Free DM</a>
@@ -109,10 +110,12 @@
           <div class="col-md-6" ng-show="dm">
             <h3>Games:</h3>
             <div class="row" ng-repeat="game in allgames">
-              <button class="btn-sm btn-default btn-block" ng-click='dmGame($index);'>{{game.name}} : {{game.code}}</button>
+              <button class="btn btn-sm btn-default btn-block" ng-click='dmGame($index);'>{{game.name}} : {{game.code}}</button>
               <p>
             </div>
           </div>
+        </div>
+        <div class="row">
           <hr>
           <div class="col-md-4">
             <button class="btn btn-md btn-default btn-block" type="button" ng-click='dm=!dm'> List Games </button>

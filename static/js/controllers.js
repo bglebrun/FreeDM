@@ -96,8 +96,8 @@ function($scope, $window, FreeDMService) {
 app.controller('LoginController',
 function($scope, $window, $location, FreeDMService) {
   $scope.allgames = $window.sessionStorage.allgames;
-  $scope.code = $window.sessionStorage.gamecode || '';
-  $scope.name = $window.sessionStorage.name || '';
+  $scope.code = $window.localStorage.gamecode || '';
+  $scope.name = $window.localStorage.playername || '';
   $scope.newplayer = false;
   $scope.dm = false;
 
@@ -111,6 +111,9 @@ function($scope, $window, $location, FreeDMService) {
         $window.sessionStorage.ac = response.data.ac;
         $window.sessionStorage.gamename = response.data.game;
         $window.sessionStorage.gamecode = $scope.code;
+
+        $window.localStorage.playername = $scope.name;
+        $window.localStorage.gamecode = $scope.code;
 
         $window.location = '/freedm/player_home';
       } else if (response.status === 400) {

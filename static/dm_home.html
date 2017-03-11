@@ -64,6 +64,10 @@ input {
                 <li>
                     <a href="/contact">Contact</a>
                 </li>
+                <li>
+                    <a href="/smartpass/home">SmartPass
+                      <span style="color:green;"> >>></span></a>
+                </li>
                 <li class="active">
                     <a href="/freedm">Free DM</a>
                 </li>
@@ -80,14 +84,16 @@ input {
       <div class="col-lg-12">
         <div class="page-header"><h1>{{gamename}} code: {{gamecode}}</h1></div>
           <ol class="breadcrumb">
-            <li><a href="/">Join</a></li>
+            <li><a href="/freedm">Join</a></li>
             <li class="active">Home</li>
           </ol>
       </div>
     </div>
     <!-- /.row -->
     <div class="container" style="max-width:1400px">
+
       <button class="btn btn-lg btn-default btn-block" ng-click="refreshPlayers()">Refresh</button>
+      <p>
       <div class="well" style="max-width:500px" ng-repeat="player in allplayers">
         <div class="row" style="padding:10px">
           <div class = "col-lg-7">
